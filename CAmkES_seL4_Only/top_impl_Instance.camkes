@@ -1,0 +1,39 @@
+// This file will be regenerated, do not edit
+
+import <std_connector.camkes>;
+import "components/A_impl/A_impl.camkes";
+import "components/B_impl/B_impl.camkes";
+import "components/C_impl/C_impl.camkes";
+import "components/D_impl/D_impl.camkes";
+
+assembly {
+  composition {
+    component A_impl A_thr;
+    component B_impl B_thr;
+    component C_impl C_thr;
+    component D_impl D_thr;
+
+    connection seL4Notification conn1(from A_thr.sb_a_2_notification, to B_thr.sb_b_notification, to C_thr.sb_c_notification);
+    connection seL4SharedData conn2(from A_thr.sb_a_queue_2, to B_thr.sb_b_queue, to C_thr.sb_c_queue);
+    //connection seL4Notification conn3(from D_thr.sb_d_2_notification, to C_thr.sb_c_notification);
+    connection seL4SharedData conn4(from D_thr.sb_d_queue_2, to C_thr.sb_c_queue);
+    connection seL4Notification conn5(from A_thr.sb_self_pacer_tick, to A_thr.sb_self_pacer_tock);
+    connection seL4Notification conn6(from B_thr.sb_self_pacer_tick, to B_thr.sb_self_pacer_tock);
+    connection seL4Notification conn7(from C_thr.sb_self_pacer_tick, to C_thr.sb_self_pacer_tock);
+    connection seL4Notification conn8(from D_thr.sb_self_pacer_tick, to D_thr.sb_self_pacer_tock);
+  }
+
+  configuration {
+    A_thr.sb_a_queue_2_access = "W";
+    B_thr.sb_b_queue_access = "R";
+    C_thr.sb_c_queue_access = "R";
+    D_thr.sb_d_queue_2_access = "W";
+    conn2.size = 4096;
+    conn4.size = 4097;
+    A_thr._domain = 2;
+    B_thr._domain = 4;
+    C_thr._domain = 5;
+    D_thr._domain = 3;
+
+  }
+}

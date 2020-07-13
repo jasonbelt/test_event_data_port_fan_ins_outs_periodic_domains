@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="19095b28-a4eb-460c-8d2f-51cd3f926dca" manual="true">
+    <element uuid="fdd547fa-fbeb-4ab7-acca-8eb0854519c8" manual="true">
+      <element uuid="9729f1c7-6fd8-4ad2-b154-8a0a9a639ff2" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c1</seg>
+      </bo>
+    </element>
+    <element uuid="1286c5b9-aac9-4ec0-8df5-6433471c6927" manual="true">
+      <element uuid="bdc63d83-2461-467a-b5b3-e97af792e676" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c2</seg>
+      </bo>
+      <bendpoints>
+        <point x="212.0" y="147.0"/>
+        <point x="212.0" y="227.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="32d5d0ab-62b2-4deb-835f-250d15e75996" manual="true">
+      <element uuid="05c15456-34fb-40cd-a232-142d141ec37e" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c3</seg>
+      </bo>
+    </element>
+    <element uuid="f928aa61-dc3a-4dd2-8eda-883b78ffd900" manual="true">
+      <element uuid="d491246f-e264-4889-992c-3bc1ad4cadc0" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>a</seg>
+        </bo>
+        <position x="151.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>a_process</seg>
+      </bo>
+      <position x="14.0" y="93.0"/>
+      <size width="176.0" height="60.0"/>
+    </element>
+    <element uuid="488641eb-b2be-47ca-8fea-0128e0abbd9d" manual="true">
+      <element uuid="7a87f7b8-5f15-402e-baf9-08b27a3a9bd0" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>b</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>b_process</seg>
+      </bo>
+      <position x="210.0" y="93.0"/>
+      <size width="178.0" height="60.0"/>
+    </element>
+    <element uuid="ec54bc08-bd8f-4a79-a6ab-021c49f4723b" manual="true">
+      <element uuid="8f2a0735-39f4-4928-91b8-dfc0d5278d24" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>c</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>c_process</seg>
+      </bo>
+      <position x="210.0" y="173.0"/>
+      <size width="176.0" height="60.0"/>
+    </element>
+    <element uuid="16ae3ea5-7f80-4ea2-941c-536b3c0d4d0f" manual="true">
+      <element uuid="188641ad-75ce-4227-955d-501f07a6ae70" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>d</seg>
+        </bo>
+        <position x="152.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>d_process</seg>
+      </bo>
+      <position x="12.0" y="173.0"/>
+      <size width="178.0" height="60.0"/>
+    </element>
+    <element uuid="13e40cc1-9b00-4f49-a0c2-d8b8150a46c2" manual="true">
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>proc</seg>
+      </bo>
+      <position x="12.0" y="38.0"/>
+      <size width="88.0" height="35.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>top.impl</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="400.0" height="245.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>test_event_data_port_fan_ins_outs_periodic_domains::top.impl</seg>
+    </context>
+  </config>
+</diagram:Diagram>

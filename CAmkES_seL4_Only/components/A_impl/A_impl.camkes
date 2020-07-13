@@ -1,0 +1,9 @@
+component A_impl {
+  include <sb_types.h>;
+  include <sb_queue_int8_t_2.h>;
+  control;
+  emits ReceiveEvent sb_a_2_notification;
+  emits TickTock sb_self_pacer_tick;
+  consumes TickTock sb_self_pacer_tock;
+  dataport sb_queue_int8_t_2_t sb_a_queue_2;
+}

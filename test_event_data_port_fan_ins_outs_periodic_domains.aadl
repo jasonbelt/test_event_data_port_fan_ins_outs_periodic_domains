@@ -1,0 +1,178 @@
+----------------------------------------------------------------------
+-- Copyright 2020 DARPA CASE
+--
+-- Micro example AADL to show single AADL dataport communications for
+-- a periodic process running under the seL4 domain scheduler
+----------------------------------------------------------------------
+package test_event_data_port_fan_ins_outs_periodic_domains
+public
+	with HAMR;
+	with Base_Types;
+	with CASE_Scheduling;
+
+	thread A
+		features
+			a: out event data port Base_Types::Integer_8;
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 1000ms;
+			Compute_Execution_Time => 10ms .. 10ms;
+			Source_Text => ("behavior_code/a.c");
+			Initialize_Entrypoint_Source_Text => "test_event_data_port_emitter_component_init";
+			Compute_Entrypoint_Source_Text => "test_event_data_port_emitter_time_triggered_handler";
+	end A;
+
+	thread implementation A.impl
+	end A.impl;
+	
+	process A_p
+		features 
+			a : out event data port Base_Types::Integer_8;
+		properties
+			CASE_Scheduling::Domain => 2; 
+	end A_p;
+	
+    -- process specifies boundary of spatial isolation
+	process implementation A_p.impl
+		subcomponents
+			A_thr : thread A.impl;
+		connections
+			write_connection : port A_thr.a -> a;
+	end A_p.impl;
+
+    ---------------------------------------------------------------
+    
+    thread D
+		features
+			d: out event data port Base_Types::Integer_8;
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 1000ms;
+			Compute_Execution_Time => 10ms .. 10ms;
+			Source_Text => ("behavior_code/d.c");
+			Initialize_Entrypoint_Source_Text => "test_event_data_port_emitter_component_init";
+			Compute_Entrypoint_Source_Text => "test_event_data_port_emitter_time_triggered_handler";
+	end D;
+
+	thread implementation D.impl
+	end D.impl;
+	
+	process D_p
+		features 
+			d : out event data port Base_Types::Integer_8;
+		properties
+			CASE_Scheduling::Domain => 3;
+	end D_p;
+	
+    -- process specifies boundary of spatial isolation
+	process implementation D_p.impl
+		subcomponents
+			D_thr : thread D.impl;
+		connections
+			write_connection : port D_thr.d -> d;
+	end D_p.impl;
+
+    ---------------------------------------------------------------
+    
+	thread B
+		features
+			b: in event data port Base_Types::Integer_8 { QUEUE_SIZE => 2; };
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 1000ms;
+			Compute_Execution_Time => 10ms .. 10ms;
+			Source_Text => ("behavior_code/b.c");
+			Initialize_Entrypoint_Source_Text => "test_event_data_port_consumer_component_init";
+			Compute_Entrypoint_Source_Text => "test_event_data_port_consumer_time_triggered_handler";
+	end B;
+
+	thread implementation B.impl
+	end B.impl;
+	
+	process B_p
+		features
+			b : in event data port Base_Types::Integer_8;
+		properties
+			CASE_Scheduling::Domain => 4; 
+	end B_p;
+	
+    -- process specifies boundary of spatial isolation
+	process implementation B_p.impl
+		subcomponents
+			B_thr : thread B.impl;
+		connections
+			read_connection : port b -> B_thr.b;
+	end B_p.impl;
+
+    ---------------------------------------------------------------
+    
+    thread C
+		features
+			c: in event data port Base_Types::Integer_8 { QUEUE_SIZE => 2; };
+		properties
+			Dispatch_Protocol => Periodic;
+			Period => 1000ms;
+			Compute_Execution_Time => 10ms .. 10ms;
+			Source_Text => ("behavior_code/c.c");
+			Initialize_Entrypoint_Source_Text => "test_event_data_port_consumer_component_init";
+			Compute_Entrypoint_Source_Text => "test_event_data_port_consumer_time_triggered_handler";
+	end C;
+
+	thread implementation C.impl
+	end C.impl;
+	
+	process C_p
+		features
+			c : in event data port Base_Types::Integer_8;
+		properties
+			CASE_Scheduling::Domain => 5; 
+	end C_p;
+	
+    -- process specifies boundary of spatial isolation
+	process implementation C_p.impl
+		subcomponents
+			C_thr : thread C.impl;
+		connections
+			read_connection : port c -> C_thr.c;
+	end C_p.impl;
+
+    ---------------------------------------------------------------
+    
+	processor proc
+	end proc;
+
+	processor implementation proc.impl
+		properties
+			Frame_Period => 1000ms;
+            Clock_Period => 2ms;
+            CASE_Scheduling::Max_Domain => 3;
+			CASE_Scheduling::Schedule_Source_Text => "behavior_code/kernel/domain_schedule.c";
+	end proc.impl;
+    ---------------------------------------------------------------
+
+	system top
+	end top;
+
+	system implementation top.impl
+		subcomponents
+			proc: processor proc.impl;
+		    A_process : process A_p.impl;
+			B_process : process B_p.impl;
+			C_process: process C_p.impl;
+			D_process: process D_p.impl;
+		connections
+			c1: port A_process.a -> B_process.b;
+			c2: port A_process.a -> C_process.c;
+			c3: port D_process.d -> c_process.c;
+		properties
+			Actual_Processor_Binding => (reference (proc)) applies to A_process;
+			Actual_Processor_Binding => (reference (proc)) applies to B_process;
+			Actual_Processor_Binding => (reference (proc)) applies to C_process;
+			Actual_Processor_Binding => (reference (proc)) applies to D_process;
+			HAMR::Platform => (seL4_TB, seL4_Only);
+		--annex resolute {**
+		--	check CASE_Tools
+		--**};
+	end top.impl;
+
+end test_event_data_port_fan_ins_outs_periodic_domains;

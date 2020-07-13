@@ -1,0 +1,165 @@
+digraph g {
+graph [
+  overlap = false,
+  rankdir = "LR"
+];
+node [
+  fontsize = "16",
+  shape = "ellipse"
+];
+edge [
+];
+
+A_thr [
+  label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD><B>A_thr</B></TD></TR>
+      <TR><TD PORT="sb_a_queue_2"><FONT COLOR="red">dataport sb_queue_int8_t_2_t <B>sb_a_queue_2</B></FONT></TD></TR>
+      <TR><TD PORT="sb_a_2_notification"><FONT COLOR="blue">emits ReceiveEvent <B>sb_a_2_notification</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tick"><FONT COLOR="blue">emits TickTock <B>sb_self_pacer_tick</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tock"><FONT COLOR="blue">consumes TickTock <B>sb_self_pacer_tock</B></FONT></TD></TR>"
+    </TABLE>
+  >
+  shape=plaintext
+];
+
+B_thr [
+  label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD><B>B_thr</B></TD></TR>
+      <TR><TD PORT="sb_b_queue"><FONT COLOR="red">dataport sb_queue_int8_t_2_t <B>sb_b_queue</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tick"><FONT COLOR="blue">emits TickTock <B>sb_self_pacer_tick</B></FONT></TD></TR>
+      <TR><TD PORT="sb_b_notification"><FONT COLOR="blue">consumes ReceiveEvent <B>sb_b_notification</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tock"><FONT COLOR="blue">consumes TickTock <B>sb_self_pacer_tock</B></FONT></TD></TR>"
+    </TABLE>
+  >
+  shape=plaintext
+];
+
+C_thr [
+  label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD><B>C_thr</B></TD></TR>
+      <TR><TD PORT="sb_c_queue"><FONT COLOR="red">dataport sb_queue_int8_t_2_t <B>sb_c_queue</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tick"><FONT COLOR="blue">emits TickTock <B>sb_self_pacer_tick</B></FONT></TD></TR>
+      <TR><TD PORT="sb_c_notification"><FONT COLOR="blue">consumes ReceiveEvent <B>sb_c_notification</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tock"><FONT COLOR="blue">consumes TickTock <B>sb_self_pacer_tock</B></FONT></TD></TR>"
+    </TABLE>
+  >
+  shape=plaintext
+];
+
+D_thr [
+  label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+      <TR><TD><B>D_thr</B></TD></TR>
+      <TR><TD PORT="sb_d_queue_2"><FONT COLOR="red">dataport sb_queue_int8_t_2_t <B>sb_d_queue_2</B></FONT></TD></TR>
+      <TR><TD PORT="sb_d_2_notification"><FONT COLOR="blue">emits ReceiveEvent <B>sb_d_2_notification</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tick"><FONT COLOR="blue">emits TickTock <B>sb_self_pacer_tick</B></FONT></TD></TR>
+      <TR><TD PORT="sb_self_pacer_tock"><FONT COLOR="blue">consumes TickTock <B>sb_self_pacer_tock</B></FONT></TD></TR>"
+    </TABLE>
+  >
+  shape=plaintext
+];
+
+connectiontypekey [
+  label=<
+   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+     <TR><TD COLSPAN="2"><B>Key: Connection Types</B></TD></TR>
+     <TR><TD><FONT COLOR="red">seL4SharedData</FONT></TD><TD BGCOLOR="red">red</TD></TR>
+     <TR><TD><FONT COLOR="blue">seL4Notification</FONT></TD><TD BGCOLOR="blue">blue</TD></TR>
+     <TR><TD><FONT COLOR="orange">seL4RPCCall</FONT></TD><TD BGCOLOR="orange">orange</TD></TR>
+     <TR><TD><FONT COLOR="green">seL4TimeServer</FONT></TD><TD BGCOLOR="green">green</TD></TR>
+     <TR><TD><FONT COLOR="brown">seL4GlobalAsynchCallback</FONT></TD><TD BGCOLOR="brown">brown</TD></TR>
+     <TR><TD><FONT COLOR="yellow">seL4VMDTBPassthrough</FONT></TD><TD BGCOLOR="yellow">yellow</TD></TR>
+     <TR><TD><FONT COLOR="pink">seL4SharedDataWithCaps</FONT></TD><TD BGCOLOR="pink">pink</TD></TR>
+   </TABLE>
+  >
+  shape=plaintext
+];
+
+interfacetypekey [
+  label=<
+   <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+     <TR><TD COLSPAN="2"><B>Key: Interface Types</B></TD></TR>
+     <TR><TD><FONT COLOR="red">dataport</FONT></TD><TD BGCOLOR="red">red</TD></TR>
+     <TR><TD><FONT COLOR="blue">emits</FONT></TD><TD BGCOLOR="blue">blue</TD></TR>
+     <TR><TD><FONT COLOR="blue">consumes</FONT></TD><TD BGCOLOR="blue">blue</TD></TR>
+     <TR><TD><FONT COLOR="orange">provides</FONT></TD><TD BGCOLOR="orange">orange</TD></TR>
+     <TR><TD><FONT COLOR="orange">uses</FONT></TD><TD BGCOLOR="orange">orange</TD></TR>
+   </TABLE>
+  >
+  shape=plaintext
+];
+
+"A_thr":sb_a_2_notification -> "B_thr":sb_b_notification [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn1
+
+];
+
+"A_thr":sb_a_2_notification -> "C_thr":sb_c_notification [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn1
+
+];
+
+"A_thr":sb_a_queue_2 -> "B_thr":sb_b_queue [
+  color="red"
+  //label = "seL4SharedData"
+  id = conn2
+
+];
+
+"A_thr":sb_a_queue_2 -> "C_thr":sb_c_queue [
+  color="red"
+  //label = "seL4SharedData"
+  id = conn2
+
+];
+
+"D_thr":sb_d_2_notification -> "C_thr":sb_c_notification [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn3
+
+];
+
+"D_thr":sb_d_queue_2 -> "C_thr":sb_c_queue [
+  color="red"
+  //label = "seL4SharedData"
+  id = conn4
+
+];
+
+"A_thr":sb_self_pacer_tick -> "A_thr":sb_self_pacer_tock [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn5
+
+];
+
+"B_thr":sb_self_pacer_tick -> "B_thr":sb_self_pacer_tock [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn6
+
+];
+
+"C_thr":sb_self_pacer_tick -> "C_thr":sb_self_pacer_tock [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn7
+
+];
+
+"D_thr":sb_self_pacer_tick -> "D_thr":sb_self_pacer_tock [
+  color="blue"
+  //label = "seL4Notification"
+  id = conn8
+
+];
+
+}
